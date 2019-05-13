@@ -1,0 +1,14 @@
+[daemon]
+user = marvin42
+pid_file = /tmp/marvin42_chirpd.pid
+log_default = /var/log/marvin42/marvin42_chirpd-default.log
+log_error = /var/log/marvin42/marvin42_chirpd-error.log
+
+[remote]
+bind_address = 10.42.0.3
+bind_port = 1042
+timeout = 5
+
+[chirp]
+config_path = ~/.chirprc
+#audiodevice_index = 0
