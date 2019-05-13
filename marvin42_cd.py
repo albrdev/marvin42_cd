@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, time, argparse, configparser, socket, struct
+import sys, time, argparse, configparser, signal, socket, struct
 from chirpsdk import ChirpConnect, CallbackSet
 
 from pathtools import *
