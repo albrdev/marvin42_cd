@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, time, argparse, configparser, signal, socket, struct
+import sys, os, time, argparse, configparser, signal, socket, struct
 from chirpsdk import ChirpConnect, CallbackSet
 
 from modules.pathtools import *
@@ -82,10 +82,10 @@ class Callbacks(CallbackSet):
 class marvin42_cd(Daemon):
     def __init__(self, args, main_config, chirp_config):
         self.is_init = False
-        print('init1 {0} {1}', self.is_init, os.getpid())
+        print('init1', self.is_init, os.getpid())
         super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
 
-        print('init2 {0} {1}', self.is_init, os.getpid())
+        print('init2', self.is_init, os.getpid())
         self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
         adi = main_config.get('chirp', 'audiodevice_index', fallback=None)
         self.chirp.audio.input_device = int(adi) if adi != None else adi
@@ -94,7 +94,7 @@ class marvin42_cd(Daemon):
         self.is_init = True
 
     def __del__(self):
-        print('init3 {0} {1}', self.is_init, os.getpid())
+        print('init3', self.is_init, os.getpid())
         if self.is_init:
             self.chirp.stop()
 
