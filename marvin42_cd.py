@@ -121,7 +121,7 @@ if __name__ == '__main__':
     )
 
     args.add_argument('operation', type=str, help="Operation to perform", metavar='operation')
-    args.add_argument('-c', '--config', dest='config', action=FullPath, type=str, default=pathtools.fullpath('~/.marvin42rc'), help="Custom config file (optional)", metavar='filepath')
+    args.add_argument('-c', '--config', dest='config', action=FullPath, type=str, default=pathtools.fullpath('/etc/marvin42_cdrc'), help="Custom config file (optional)", metavar='filepath')
     args = args.parse_args()
 
     main_config = configparser.ConfigParser()
