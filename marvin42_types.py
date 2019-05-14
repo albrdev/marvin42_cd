@@ -1,7 +1,7 @@
 from enum import IntEnum
 from collections import namedtuple
 import struct
-from networking import PacketID
+from modules.networking import PacketID
 
 class CommandID(IntEnum):
     MOTORSPEED      = 2

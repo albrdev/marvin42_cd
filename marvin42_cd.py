@@ -3,9 +3,9 @@
 import sys, time, argparse, configparser, signal, socket, struct
 from chirpsdk import ChirpConnect, CallbackSet
 
-from pathtools import *
-from networking import PacketHeader
-from daemon import Daemon
+from modules.pathtools import *
+from modules.networking import PacketHeader
+from modules.daemon import Daemon
 import marvin42_types
 from marvin42_types import *
 
