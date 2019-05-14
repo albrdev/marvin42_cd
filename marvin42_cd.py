@@ -93,6 +93,7 @@ class marvin42_cd(Daemon):
 
     def __del__(self):
         super().__del__()
+        print('init:', self.is_init)
         if self.is_init:
             self.chirp.stop()
 
