@@ -82,7 +82,7 @@ class Callbacks(CallbackSet):
 class marvin42_cd(Daemon):
     def __init__(self, args, main_config, chirp_config):
         self.is_init = False
-        super().__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
+        super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
 
         self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
         adi = main_config.get('chirp', 'audiodevice_index', fallback=None)
@@ -92,7 +92,7 @@ class marvin42_cd(Daemon):
         self.is_init = True
 
     def __del__(self):
-        super().__del__()
+        super(marvin42_cd, self).__del__()
         print('init:', self.is_init)
         if self.is_init:
             self.chirp.stop()
