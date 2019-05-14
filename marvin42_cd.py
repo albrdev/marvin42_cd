@@ -23,7 +23,7 @@ class Callbacks(CallbackSet):
 
     def on_received(self, payload, channel):
         if payload is not None:
-            self.process_data(bytes(data));
+            self.process_data(bytes(payload));
         else:
             print("Chirp: Decoding failed")
 
