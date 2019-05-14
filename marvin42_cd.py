@@ -82,21 +82,26 @@ class Callbacks(CallbackSet):
 class marvin42_cd(Daemon):
     def __init__(self, args, main_config, chirp_config):
         self.is_init = False
+        self.main_config = main_config
+        self.chirp_config = chirp_config
         print('init1', self.is_init, os.getpid())
         super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
-
-        print('init2', self.is_init, os.getpid())
-        self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
-        adi = main_config.get('chirp', 'audiodevice_index', fallback=None)
-        self.chirp.audio.input_device = int(adi) if adi != None else adi
-        self.chirp.set_callbacks(Callbacks(main_config))
-        self.chirp.start(send=False, receive=True)
-        self.is_init = True
 
     def __del__(self):
         print('init3', self.is_init, os.getpid())
         if self.is_init:
             self.chirp.stop()
+
+    def init(self):
+        super(marvin42_cd, self).init()
+
+        print('init2', self.is_init, os.getpid())
+        self.chirp = ChirpConnect(self.chirp_config['default']['app_key'], self.chirp_config['default']['app_secret'], self.chirp_config['default']['app_config'])
+        adi = self.main_config.get('chirp', 'audiodevice_index', fallback=None)
+        self.chirp.audio.input_device = int(adi) if adi != None else adi
+        self.chirp.set_callbacks(Callbacks(self.main_config))
+        self.chirp.start(send=False, receive=True)
+        self.is_init = True
 
     def handle_signals(self, num, frame):
         {
