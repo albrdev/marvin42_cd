@@ -86,7 +86,7 @@ class marvin42_cd(Daemon):
         self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
         di = main_config.get('chirp', 'audiodevice_index', fallback=None)
         self.chirp.audio.input_device = int(di) if di != None else di
-        self.chirp.set_callbacks(Callbacks(args))
+        self.chirp.set_callbacks(Callbacks(main_config))
         self.chirp.start(send=False, receive=True)
 
     def __del__(self):
