@@ -2,5 +2,6 @@
 .gitattributes text eol=lf
 *.[mM][dD] text eol=lf
 
+Makefile text eol=lf
 *.[pP][yY] text eol=lf
 cfg/**/* text eol=lf
