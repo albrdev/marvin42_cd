@@ -122,7 +122,7 @@ if __name__ == '__main__':
     chirp_config = configparser.ConfigParser()
     chirp_config.read(pathtools.fullpath(main_config['chirp']['config_path']))
 
-    daemon = marvin42_td(args, main_config, chirp_config)
+    daemon = marvin42_cd(args, main_config, chirp_config)
     if args.operation == 'start':
         daemon.start()
     elif args.operation == 'stop':
