@@ -29,6 +29,8 @@ class Callbacks(CallbackSet):
 
     def process_data(self, data) -> bool:
         print("Chirp: Data received: {d}".format(d=data))
+        print("Chirp: Data received: {d}".format(d=list(data)))
+        print("Chirp: Data received: {d}".format(d=bytes(data)))
 
         try:
             type = CommandID(data[0])
