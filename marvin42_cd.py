@@ -91,7 +91,7 @@ class marvin42_cd(Daemon):
 
     def __del__(self):
         super().__del__()
-        chirp.stop()
+        self.chirp.stop()
 
     def handle_signals(self, num, frame):
         {
