@@ -1,8 +1,8 @@
 [daemon]
 user = marvin42
-pid_file = /tmp/marvin42_chirpd.pid
-log_default = /var/log/marvin42/marvin42_chirpd-default.log
-log_error = /var/log/marvin42/marvin42_chirpd-error.log
+pid_file = /tmp/marvin42_cd.pid
+log_default = /var/log/marvin42/marvin42_cd-default.log
+log_error = /var/log/marvin42/marvin42_cd-error.log
 
 [remote]
 bind_address = 10.42.0.3
