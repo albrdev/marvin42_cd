@@ -103,6 +103,7 @@ class marvin42_cd(Daemon):
         }.get(num, lambda *args: None)()
 
     def run(self):
+        print("Running...")
         time.sleep(0.1)
 
 if __name__ == '__main__':
