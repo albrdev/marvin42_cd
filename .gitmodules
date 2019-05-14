@@ -1,0 +1,4 @@
+[submodule "modules"]
+	path = modules
+	url = git@github.com:albrdev/marvin42_modules.git
+	branch = master
