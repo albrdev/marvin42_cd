@@ -92,10 +92,10 @@ class marvin42_cd(Daemon):
             self.chirp.stop()
 
     def init(self):
-        print('path', pathtools.fullpath("~"))
+        print('path', pathtools.fullpath("$HOME"))
         super(marvin42_cd, self).init()
 
-        print('path', pathtools.fullpath("~"))
+        print('path', pathtools.fullpath("$HOME"))
         self.chirp = ChirpConnect(self.chirp_config['default']['app_key'], self.chirp_config['default']['app_secret'], self.chirp_config['default']['app_config'])
         adi = self.main_config.get('chirp', 'audiodevice_index', fallback=None)
         self.chirp.audio.input_device = int(adi) if adi != None else adi
