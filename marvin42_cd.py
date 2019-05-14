@@ -12,7 +12,7 @@ from marvin42_types import *
 class Callbacks(CallbackSet):
     def __init__(self, config):
         self.host = socket.getaddrinfo(config['remote']['bind_address'], int(config['remote']['bind_port']), socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
-        self.host = host[0][4]
+        self.host = self.host[0][4]
 
         self.timeout = config.get('remote', 'timeout', fallback=None)
         if self.timeout is not None:
