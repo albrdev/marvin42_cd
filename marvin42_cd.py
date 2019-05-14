@@ -62,7 +62,7 @@ class Callbacks(CallbackSet):
         s = socket.socket()
         s.settimeout(self.timeout)
 
-        s.connect(host)
+        s.connect(self.host)
         s.send(header)
         s.send(data)
 
