@@ -10,5 +10,5 @@ bind_port = 1042
 timeout = 5
 
 [chirp]
-config_path = ~/.chirprc
+config_path = /etc/chirprc
 #audiodevice_index = 0
