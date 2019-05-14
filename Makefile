@@ -12,6 +12,15 @@ CMD_CP				:= cp -f
 CMD_RM				:= rm -f
 CMD_PRINT			:= @printf
 
+.PHONY: install
+install:
+	$(CMD_CP) --force $(DIR_SRC)/$(SRC_NAME) $(DIR_BIN_INSTALL)/$(APP_NAME)
+	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)
+
+.PHONY: uninstall
+uninstall:
+	$(CMD_RM) --force $(DIR_BIN_INSTALL)/$(APP_NAME)
+
 .PHONY: test
 test:
 	$(CMD_PRINT) "DIR_SRC=$(DIR_SRC)\n"
@@ -21,12 +30,3 @@ test:
 	$(CMD_PRINT) "SRC_NAME=$(SRC_NAME)\n"
 	$(CMD_PRINT) "APP_NAME=$(APP_NAME)\n"
 	$(CMD_PRINT) "CFG_NAME=$(CFG_NAME)\n"
-
-.PHONY: install
-install:
-	$(CMD_CP) --force $(DIR_SRC)/$(SRC_NAME) $(DIR_BIN_INSTALL)/$(APP_NAME)
-	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)
-
-.PHONY: uninstall
-uninstall:
-	$(CMD_RM) --force $(DIR_BIN_INSTALL)/$(APP_NAME)
