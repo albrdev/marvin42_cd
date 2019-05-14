@@ -23,14 +23,12 @@ class Callbacks(CallbackSet):
 
     def on_received(self, payload, channel):
         if payload is not None:
-            self.process_data(payload);
+            self.process_data(bytes(data));
         else:
             print("Chirp: Decoding failed")
 
-    def process_data(self, data) -> bool:
+    def process_data(self, data: bytes) -> bool:
         print("Chirp: Data received: {d}".format(d=data))
-        print("Chirp: Data received: {d}".format(d=list(data)))
-        print("Chirp: Data received: {d}".format(d=bytes(data)))
 
         try:
             type = CommandID(data[0])
