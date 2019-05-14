@@ -94,7 +94,6 @@ class marvin42_cd(Daemon):
         self.is_init = True
 
     def __del__(self):
-        super(marvin42_cd, self).__del__()
         print('init3:', self.is_init, file=sys.stderr)
         if self.is_init:
             self.chirp.stop()
