@@ -56,6 +56,7 @@ class Callbacks(CallbackSet):
 
     def forward_packet_motorstop(self):
         header = struct.pack(PacketHeader.FORMAT, int(CommandID.MOTORSTOP), 0)
+        print("Send stop:", header)
         self.forward_data(header)
 
     def forward_packet_motorsettings(self, data):
