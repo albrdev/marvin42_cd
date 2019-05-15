@@ -39,6 +39,8 @@ class Callbacks(CallbackSet):
         if type == CommandID.MOTORSPEED:
             data = struct.unpack('!ii', data)
             self.forward_packet_motorspeed(data)
+        if type == CommandID.MOTORSTOP:
+            self.forward_packet_motorstop()
         elif type == CommandID.MOTORSETTINGS:
             data = struct.unpack('!i', data)
             self.forward_packet_motorsettings(data)
@@ -52,18 +54,23 @@ class Callbacks(CallbackSet):
         header = struct.pack(PacketHeader.FORMAT, int(CommandID.MOTORSPEED), PacketMotorSpeed.SIZE)
         self.forward_data(header, data)
 
+    def forward_packet_motorstop(self):
+        header = struct.pack(PacketHeader.FORMAT, int(CommandID.MOTORSTOP), 0)
+        self.forward_data(header)
+
     def forward_packet_motorsettings(self, data):
         data = struct.pack(PacketMotorSettings.FORMAT, data[0])
         header = struct.pack(PacketHeader.FORMAT, int(CommandID.MOTORSETTINGS), PacketMotorSettings.SIZE)
         self.forward_data(header, data)
 
-    def forward_data(self, header: PacketHeader, data) -> bool:
+    def forward_data(self, header: PacketHeader, data=None) -> bool:
         s = socket.socket()
         s.settimeout(self.timeout)
 
         s.connect(self.host)
         s.send(header)
-        s.send(data)
+        if data is not None:
+            s.send(data)
 
         try:
             response = s.recv(PacketHeader.SIZE)
