@@ -6,7 +6,6 @@ from chirpsdk import ChirpConnect, CallbackSet
 from modules.pathtools import *
 from modules.networking import PacketHeader
 from modules.daemon import Daemon
-#import modules.marvin42
 from modules.marvin42 import *
 
 class Callbacks(CallbackSet):
