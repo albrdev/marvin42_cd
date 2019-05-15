@@ -39,7 +39,7 @@ class Callbacks(CallbackSet):
         if type == CommandID.MOTORSPEED:
             data = struct.unpack('!ii', data)
             self.forward_packet_motorspeed(data)
-        if type == CommandID.MOTORSTOP:
+        elif type == CommandID.MOTORSTOP:
             self.forward_packet_motorstop()
         elif type == CommandID.MOTORSETTINGS:
             data = struct.unpack('!i', data)
@@ -56,7 +56,6 @@ class Callbacks(CallbackSet):
 
     def forward_packet_motorstop(self):
         header = struct.pack(PacketHeader.FORMAT, int(CommandID.MOTORSTOP), 0)
-        print("Send stop:", header)
         self.forward_data(header)
 
     def forward_packet_motorsettings(self, data):
