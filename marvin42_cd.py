@@ -36,7 +36,7 @@ class Callbacks(CallbackSet):
             return False
 
         data = data[1:]
-        print("Chirp: Forwarding: {d} ({t})".format(type, data))
+        print("Chirp: Forwarding: {d} ({t})".format(t=type, d=data))
         if type == CommandID.MOTORSPEED:
             data = struct.unpack('!ii', data)
             self.forward_packet_motorspeed(data)
