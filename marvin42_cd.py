@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys, os, time, argparse, configparser, signal, socket, struct
 from chirpsdk import ChirpConnect, CallbackSet
