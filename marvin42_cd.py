@@ -36,6 +36,7 @@ class Callbacks(CallbackSet):
             return False
 
         data = data[1:]
+        print("Chirp: Forwarding: {d} ({t})".format(type, data))
         if type == CommandID.MOTORSPEED:
             data = struct.unpack('!ii', data)
             self.forward_packet_motorspeed(data)
@@ -72,18 +73,19 @@ class Callbacks(CallbackSet):
         if data is not None:
             s.send(data)
 
-        try:
-            response = s.recv(PacketHeader.SIZE)
-        except socket.timeout:
-            print('Remote: Response timed out')
-            s.close()
-            return False
-        else:
-            response = PacketHeader._make(struct.unpack(PacketHeader.FORMAT, response))
-            print("Remote: {d}".format(d=response))
+        #try:
+        #    response = s.recv(PacketHeader.SIZE)
+        #except socket.timeout:
+        #    print('Remote: Response timed out')
+        #    s.close()
+        #    return False
+        #else:
+        #    response = PacketHeader._make(struct.unpack(PacketHeader.FORMAT, response))
+        #    print("Remote: {d}".format(d=response))
 
-            s.close()
-            return True
+        #    s.close()
+        #    return True
+        return True
 
 class marvin42_cd(Daemon):
     def __init__(self, args, main_config, chirp_config):
