@@ -37,14 +37,14 @@ class Callbacks(CallbackSet):
 
         data = data[1:]
         print("Chirp: Forwarding: {d} ({t})".format(t=type, d=data))
-        if type == CommandID.MOTORSPEED:
-            data = struct.unpack('!ii', data)
+        if type == CommandID.MOTORSETTINGS:
+            data = struct.unpack(PacketMotorSettings.FORMAT, data)
+            self.forward_packet_motorsettings(data)
+        elif type == CommandID.MOTORSPEED:
+            data = struct.unpack(PacketMotorSpeed.FORMAT, data)
             self.forward_packet_motorspeed(data)
         elif type == CommandID.MOTORSTOP:
             self.forward_packet_motorstop()
-        elif type == CommandID.MOTORSETTINGS:
-            data = struct.unpack('!i', data)
-            self.forward_packet_motorsettings(data)
         else:
             print("Chirp: Command ID not implemented: {t}".format(t=type), file=sys.stderr)
 
