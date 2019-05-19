@@ -88,12 +88,10 @@ class Callbacks(CallbackSet):
         return True
 
 class marvin42_cd(Daemon):
-    __slots__ = ['is_init', 'main_config', 'chirp_config', 'chirp']
+    __slots__ = ['is_init', 'chirp']
 
-    def __init__(self, args, main_config, chirp_config):
+    def __init__(self):
         self.is_init = False
-        self.main_config = main_config
-        self.chirp_config = chirp_config
         super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
 
     def __del__(self):
@@ -103,10 +101,10 @@ class marvin42_cd(Daemon):
     def init(self):
         super(marvin42_cd, self).init()
 
-        self.chirp = ChirpConnect(self.chirp_config['default']['app_key'], self.chirp_config['default']['app_secret'], self.chirp_config['default']['app_config'])
-        adi = self.main_config.get('chirp', 'audiodevice_index', fallback=None)
+        self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
+        adi = main_config.get('chirp', 'audiodevice_index', fallback=None)
         self.chirp.audio.input_device = int(adi) if adi != None else adi
-        self.chirp.set_callbacks(Callbacks(self.main_config))
+        self.chirp.set_callbacks(Callbacks(main_config))
         self.chirp.start(send=False, receive=True)
         self.is_init = True
 
@@ -126,6 +124,9 @@ class marvin42_cd(Daemon):
         time.sleep(0.1)
 
 if __name__ == '__main__':
+    global main_config
+    global chirp_config
+
     if len(sys.argv) < 2:
         print ("Usage: {app} start|stop|restart".format(app=sys.argv[0]))
         sys.exit(1)
@@ -145,7 +146,7 @@ if __name__ == '__main__':
     chirp_config = configparser.ConfigParser()
     chirp_config.read(pathtools.fullpath(main_config['chirp']['config_path']))
 
-    daemon = marvin42_cd(args, main_config, chirp_config)
+    daemon = marvin42_cd()
     if args.operation == 'start':
         daemon.start()
     elif args.operation == 'stop':
