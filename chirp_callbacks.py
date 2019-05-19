@@ -34,7 +34,7 @@ class ChirpCallbacks(CallbackSet):
             return False
 
         data = data[1:]
-        print("Chirp: Forwarding: {d} ({t})".format(t=type, d=data))
+        print("Chirp: Forwarding data: {d} ({t})".format(t=type, d=data))
         if type == CommandID.MOTORSETTINGS:
             data = struct.unpack(PacketMotorSettings.FORMAT, data)
             self.forward_packet_motorsettings(data)
@@ -67,20 +67,20 @@ class ChirpCallbacks(CallbackSet):
         s.settimeout(self.timeout)
 
         s.connect(self.host)
-        s.send(header)
+        s.sendall(header)
         if data is not None:
-            s.send(data)
+            s.sendall(data)
 
-        #try:
-        #    response = s.recv(PacketHeader.SIZE)
-        #except socket.timeout:
-        #    print('Remote: Response timed out')
-        #    s.close()
-        #    return False
-        #else:
-        #    response = PacketHeader._make(struct.unpack(PacketHeader.FORMAT, response))
-        #    print("Remote: {d}".format(d=response))
+        try:
+            response = s.recv(PacketHeader.SIZE)
+        except socket.timeout:
+            print('Remote: Response timed out')
+            s.close()
+            return False
+        else:
+            response = PacketHeader._make(struct.unpack(PacketHeader.FORMAT, response))
+            print("Remote: {d}".format(d=response))
 
-        #    s.close()
-        #    return True
+            s.close()
+            return True
         return True
