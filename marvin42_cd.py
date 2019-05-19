@@ -39,7 +39,7 @@ class marvin42_cd(Daemon):
 
     def restart(self):
         self.stop()
-        time.sleep(10)
+        time.sleep(5)
         self.start()
 
     def run(self):
