@@ -4,8 +4,8 @@ import sys, os, time, argparse, configparser, signal, socket, struct
 from chirpsdk import ChirpConnect, CallbackSet
 
 from modules.pathtools import *
-from modules.networking import PacketHeader
 from modules.daemon import Daemon
+from modules.networking import PacketHeader
 from modules.marvin42 import *
 
 class Callbacks(CallbackSet):
@@ -88,8 +88,9 @@ class Callbacks(CallbackSet):
         return True
 
 class marvin42_cd(Daemon):
-    def __init__(self, args, main_config, chirp_config):
+    __slots__ = ['is_init', 'main_config', 'chirp_config', 'chirp']
 
+    def __init__(self, args, main_config, chirp_config):
         self.is_init = False
         self.main_config = main_config
         self.chirp_config = chirp_config
@@ -109,10 +110,11 @@ class marvin42_cd(Daemon):
         self.chirp.start(send=False, receive=True)
         self.is_init = True
 
-    def handle_signals(self, num, frame):
+    def signal_handler(self, num, frame):
         {
             signal.SIGINT: lambda: sys.exit(0), 
-            signal.SIGTERM: lambda: sys.exit(0)
+            signal.SIGTERM: lambda: sys.exit(0),
+            signal.SIGHUP: lambda: self.restart()
         }.get(num, lambda *args: None)()
 
     def run(self):
