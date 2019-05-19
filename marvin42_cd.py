@@ -117,6 +117,11 @@ class marvin42_cd(Daemon):
             signal.SIGHUP: lambda: self.restart()
         }.get(num, lambda *args: None)()
 
+    def restart(self):
+        self.stop()
+        time.sleep(10)
+        self.start()
+
     def run(self):
         time.sleep(0.1)
 
