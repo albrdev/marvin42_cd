@@ -94,9 +94,11 @@ class marvin42_cd(Daemon):
         self.is_init = False
         super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
 
-    def __del__(self):
+    def cleanup(self):
         if self.is_init:
             self.chirp.stop()
+
+        super(marvin42_cd, self).cleanup()
 
     def init(self):
         super(marvin42_cd, self).init()
