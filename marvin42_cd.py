@@ -8,29 +8,41 @@ from modules.daemon import Daemon
 from chirp_callbacks import ChirpCallbacks
 
 class marvin42_cd(Daemon):
-    __slots__ = ['is_init', 'chirp']
+    """
+    marvin42 Chirp Daemon
+    Receives Chirp audio and redirects its data to an external device
+    """
+    __slots__ = ['chirp']
 
     def __init__(self):
-        self.is_init = False
+        self.chirp = None
         super(marvin42_cd, self).__init__(main_config['daemon']['user'], main_config['daemon']['pid_file'], main_config['daemon']['log_default'], main_config['daemon']['log_error'])
 
     def cleanup(self):
-        if self.is_init:
+        """
+        Stops Chirp SDK, if initialized
+        """
+        if self.chirp is not None:
             self.chirp.stop()
 
         super(marvin42_cd, self).cleanup()
 
     def init(self):
+        """
+        Setting up Chirp SDK
+        """
         super(marvin42_cd, self).init()
 
-        self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config'])
-        adi = main_config.get('chirp', 'audiodevice_index', fallback=None)
-        self.chirp.audio.input_device = int(adi) if adi != None else adi
-        self.chirp.set_callbacks(ChirpCallbacks(main_config))
-        self.chirp.start(send=False, receive=True)
-        self.is_init = True
+        self.chirp = ChirpConnect(chirp_config['default']['app_key'], chirp_config['default']['app_secret'], chirp_config['default']['app_config']) # Using chirp config file (.chirprc)
+        adi = main_config.get('chirp', 'audiodevice_index', fallback=None) # Get audio device index, if any, otherwise None (which will make Chirp choose one automatically)
+        self.chirp.audio.input_device = int(adi) if adi != None else adi # Convert string to int
+        self.chirp.set_callbacks(ChirpCallbacks(main_config)) # Chirp needs an entire class with specifically named callback methods i.e. (see class 'ChirpCallbacks')
+        self.chirp.start(send=False, receive=True) # Start listening for Chirps. We don't need to send anything
 
     def signal_handler(self, num, frame):
+        """
+        Signal handler
+        """
         {
             signal.SIGINT: lambda: sys.exit(0), 
             signal.SIGTERM: lambda: sys.exit(0),
@@ -38,6 +50,11 @@ class marvin42_cd(Daemon):
         }.get(num, lambda *args: None)()
 
     def restart(self):
+        """
+        Overridden restart method from base class.
+        This was just to test if Chirp could be able to listen for Chirps again after a specific time (Chirp daemon fails to (re)initialize Chirp SDK when calling this method. The acctual problem is probably due to the old Python process is still running while the new one starts (Use 'systemd' instead?))
+        It did'nt work. So I left this here for a heads-up
+        """
         self.stop()
         time.sleep(5)
         self.start()
