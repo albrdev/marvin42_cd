@@ -60,6 +60,10 @@ class marvin42_cd(Daemon):
         self.start()
 
     def run(self):
+        """
+        Overriden daemon main loop
+        Nothing to be handled here right now
+        """
         time.sleep(0.1)
 
 if __name__ == '__main__':
