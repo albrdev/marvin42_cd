@@ -23,13 +23,3 @@ install:
 uninstall:
 	$(CMD_RM) --recursive --force $(DIR_BIN_INSTALL)/$(MOD_NAME)
 	$(CMD_RM) --force $(DIR_BIN_INSTALL)/$(APP_NAME)
-
-.PHONY: test
-test:
-	$(CMD_PRINT) "DIR_SRC=$(DIR_SRC)\n"
-	$(CMD_PRINT) "DIR_CFG=$(DIR_CFG)\n"
-	$(CMD_PRINT) "DIR_BIN_INSTALL=$(DIR_BIN_INSTALL)\n"
-	$(CMD_PRINT) "DIR_CFG_INSTALL=$(DIR_CFG_INSTALL)\n"
-	$(CMD_PRINT) "SRC_NAME=$(SRC_NAME)\n"
-	$(CMD_PRINT) "APP_NAME=$(APP_NAME)\n"
-	$(CMD_PRINT) "CFG_NAME=$(CFG_NAME)\n"
