@@ -17,7 +17,7 @@ CMD_PRINT			:= @printf
 .PHONY: install
 install:
 	$(CMD_CP) --force $(DIR_SRC)/$(SRC_NAME) $(DIR_BIN_INSTALL)/$(APP_NAME)
-	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)
+	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)/$(CFG_NAME)
 	$(CMD_CP) --recursive --no-target-directory --force $(DIR_SRC)/$(MOD_NAME) $(DIR_BIN_INSTALL)/$(MOD_NAME)
 
 	$(CMD_CHMOD) u+x,g+x $(DIR_BIN_INSTALL)/$(APP_NAME)
