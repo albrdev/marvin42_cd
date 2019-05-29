@@ -16,16 +16,26 @@ CMD_PRINT			:= @printf
 
 .PHONY: install
 install:
+	# Main
 	$(CMD_CP) --force $(DIR_SRC)/$(SRC_NAME) $(DIR_BIN_INSTALL)/$(APP_NAME)
 	$(CMD_CP) --force $(DIR_SRC)/chirp_callbacks.py $(DIR_BIN_INSTALL)/chirp_callbacks.py
-	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)/$(CFG_NAME)
+
+	# Modules
 	$(CMD_CP) --recursive --no-target-directory --force $(DIR_SRC)/$(MOD_NAME) $(DIR_BIN_INSTALL)/$(MOD_NAME)
 
+	# Configs
+	$(CMD_CP) --no-clobber $(DIR_CFG)/$(CFG_NAME) $(DIR_CFG_INSTALL)/$(CFG_NAME)
+
+	# MISC
 	$(CMD_CHMOD) u+x,g+x,o+x $(DIR_BIN_INSTALL)/$(APP_NAME)
 
 .PHONY: uninstall
 uninstall:
+	# Modules
 	$(CMD_RM) --recursive --force $(DIR_BIN_INSTALL)/$(MOD_NAME)
+
+	# Main
+	$(CMD_RM) --force $(DIR_BIN_INSTALL)/chirp_callbacks.py
 	$(CMD_RM) --force $(DIR_BIN_INSTALL)/$(APP_NAME)
 
 .PHONY: test
