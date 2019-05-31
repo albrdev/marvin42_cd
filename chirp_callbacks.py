@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+@author: albrdev
+@email: albrdev@gmail.com
+@date: 2019-05-19
+"""
+
 import sys, socket, struct
 from chirpsdk import CallbackSet
 
